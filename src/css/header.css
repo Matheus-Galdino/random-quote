@@ -1,0 +1,42 @@
+header {
+  height: 5vh;
+  width: 90vw;
+
+  margin: 20px auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+header div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  color: #4f4f4f;
+
+  padding: 1rem;
+
+  transition: all 0.2s ease;
+}
+
+header div:hover {
+  background: #4f4f4f;
+  color: #f2f2f2;
+}
+
+header span {
+  font-weight: 500;
+  font-size: 18px;
+
+  color: inherit;
+
+  margin-right: 10px;
+}
+
+header span.material-icons {
+  margin-right: 0px;
+
+  color: inherit;
+}

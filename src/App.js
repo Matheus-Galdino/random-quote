@@ -1,24 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import API from "./QuoteGarden";
+
+//components
+import Header from "./components/Header";
+import Quote from "./components/Quote";
 
 function App() {
+  const [quote, setQuote] = useState({});
+  const [showAuthorQuotes, setShowAuthorQuotes] = useState(false);
+
+  useEffect(() => {
+    getQuote();
+  }, []);
+
+  useEffect(() => {
+    const getAuthorQuotes = async () => {
+      const result = await API.getAuthorQuotes(quote.quote.quoteAuthor);
+      setQuote(result);
+      console.log(quote);
+    };
+
+    if (showAuthorQuotes === true) getAuthorQuotes();
+  }, [showAuthorQuotes]);
+
+  const getQuote = async () => {
+    const result = await API.getRandomQuote();
+    setQuote(result);
+    setShowAuthorQuotes(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header getQuote={getQuote} />
+      {!showAuthorQuotes && (
+        <Quote
+          quote={quote.quote}
+          showAuthorInfo={true}
+          setShowAuthorQuotes={setShowAuthorQuotes}
+        />
+      )}
+      {showAuthorQuotes && (
+        <div className="author-quotes-container">
+          {quote.quotes && (
+            <div>
+              <h1>{quote.quotes[0].quoteAuthor}</h1>
+              {quote.quotes.map((item) => (
+                <Quote quote={item} showAuthorInfo={false} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      <footer className={showAuthorQuotes ? "margin" : ""}>
+        Matheus Carvalho @devChallenges.io
+      </footer>
     </div>
   );
 }
