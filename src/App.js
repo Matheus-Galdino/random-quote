@@ -18,10 +18,10 @@ function App() {
     const getAuthorQuotes = async () => {
       const result = await API.getAuthorQuotes(quote.quote.quoteAuthor);
       setQuote(result);
-      console.log(quote);
     };
 
     if (showAuthorQuotes === true) getAuthorQuotes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAuthorQuotes]);
 
   const getQuote = async () => {
